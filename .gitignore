@@ -33,6 +33,11 @@ coverage.html
 *.orig
 *.rej
 
+# macOS metadata / AppleDouble files
+._*
+.AppleDouble
+.LSOverride
+
 # Logs / runtime / caches
 *.log
 *.pid

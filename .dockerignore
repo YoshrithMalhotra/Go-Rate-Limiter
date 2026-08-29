@@ -38,6 +38,11 @@ coverage.html
 *.swo
 *~
 
+# macOS metadata / AppleDouble files
+._*
+.AppleDouble
+.LSOverride
+
 # OS files
 .DS_Store
 Thumbs.db
