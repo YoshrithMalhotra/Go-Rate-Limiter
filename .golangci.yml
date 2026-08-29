@@ -1,0 +1,19 @@
+version: "2"
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - ineffassign
+    - gocritic
+    - misspell
+
+issues:
+  max-issues-per-linter: 50
+  max-same-issues: 5
+
+formatters:
+  enable:
+    - gofmt

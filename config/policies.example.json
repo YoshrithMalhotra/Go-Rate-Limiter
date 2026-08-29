@@ -1,0 +1,40 @@
+{
+  "policies": [
+    {
+      "name": "default",
+      "limit": 100,
+      "window_ms": 60000,
+      "algorithm": "sliding_window"
+    },
+    {
+      "name": "ip-basic",
+      "limit": 100,
+      "window_ms": 60000,
+      "algorithm": "gcra"
+    },
+    {
+      "name": "login",
+      "limit": 5,
+      "window_ms": 300000,
+      "algorithm": "gcra"
+    },
+    {
+      "name": "login-route",
+      "limit": 5,
+      "window_ms": 300000,
+      "algorithm": "gcra"
+    },
+    {
+      "name": "public-api",
+      "limit": 1000,
+      "window_ms": 86400000,
+      "algorithm": "gcra"
+    },
+    {
+      "name": "user-free",
+      "limit": 1000,
+      "window_ms": 86400000,
+      "algorithm": "gcra"
+    }
+  ]
+}

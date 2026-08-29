@@ -1,0 +1,17 @@
+# Exclude git repository
+.git
+.gitignore
+
+# Exclude local build/cache/binaries
+gobouncer
+gobouncer.exe
+.gocache
+.tmp-go
+*.out
+*.html
+
+# Exclude IDE settings and environment configurations
+.vscode
+.idea
+.env
+*.local

@@ -1,0 +1,43 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+gobouncer
+
+# Test binaries
+*.test
+
+# Output of go coverage
+*.out
+*.prof
+coverage
+coverage.html
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vendor (if using go mod vendor)
+# vendor/
+
+# Build output
+/bin/
+/dist/
+
+# Local Go build cache/temp when system temp is full
+.tmp-go/
+.gocache/
+nul
