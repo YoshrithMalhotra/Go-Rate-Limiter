@@ -1,17 +1,53 @@
-# Exclude git repository
+# VCS metadata
 .git
 .gitignore
+.github/
 
-# Exclude local build/cache/binaries
+# Build output and binaries
 gobouncer
 gobouncer.exe
-.gocache
-.tmp-go
+/bin/
+/dist/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
 *.out
-*.html
+*.prof
+coverage/
+coverage.html
 
-# Exclude IDE settings and environment configurations
-.vscode
-.idea
+# Local caches and temp files
+.gocache/
+.tmp-go/
+.cache/
+.tmp/
+*.tmp
+*.temp
+*.log
+*.pid
+*.lock
+
+# IDE / editor / metadata state
+.vscode/
+.idea/
+.metadata/
+*.metadata
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
 .env
+.env.*
 *.local
+
+# Git backup / patch files
+*.bak
+*.orig
+*.rej

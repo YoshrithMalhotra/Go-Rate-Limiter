@@ -12,19 +12,37 @@ gobouncer
 # Output of go coverage
 *.out
 *.prof
-coverage
+coverage/
 coverage.html
 
 # Environment
 .env
 .env.*
 
-# IDE
+# IDE / editor state
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.metadata/
+*.metadata
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+
+# Logs / runtime / caches
+*.log
+*.pid
+*.lock
+.cache/
+.tmp/
+.tmp-go/
+.gocache/
+nohup.out
+nul
 
 # OS
 .DS_Store
@@ -36,8 +54,3 @@ Thumbs.db
 # Build output
 /bin/
 /dist/
-
-# Local Go build cache/temp when system temp is full
-.tmp-go/
-.gocache/
-nul
