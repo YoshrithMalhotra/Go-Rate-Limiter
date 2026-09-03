@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ritik-kharya/gobouncer/internal/limiter"
-	"github.com/ritik-kharya/gobouncer/internal/policy"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/limiter"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/policy"
 )
 
 // NewCheckHandler returns a handler that checks the rate limit using the selected algorithm.

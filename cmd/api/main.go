@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/ritik-kharya/gobouncer/internal/config"
-	"github.com/ritik-kharya/gobouncer/internal/handlers"
-	"github.com/ritik-kharya/gobouncer/internal/limiter"
-	"github.com/ritik-kharya/gobouncer/internal/metrics"
-	"github.com/ritik-kharya/gobouncer/internal/policy"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/config"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/handlers"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/limiter"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/metrics"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/policy"
 )
 
 // Build-time variables injected via ldflags by GoReleaser.

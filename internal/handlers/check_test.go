@@ -9,9 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ritik-kharya/gobouncer/internal/limiter"
-	"github.com/ritik-kharya/gobouncer/internal/metrics"
-	"github.com/ritik-kharya/gobouncer/internal/policy"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/limiter"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/metrics"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/policy"
 )
 
 type stubAlgorithm struct {

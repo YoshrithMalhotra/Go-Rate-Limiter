@@ -50,8 +50,8 @@ changelog:
 
 release:
   github:
-    owner: ritik-kharya
-    name: gobouncer
+    owner: YoshrithMalhotra
+    name: Go-Rate-Limiter
   draft: false
   prerelease: auto
   name_template: "v{{ .Version }}"

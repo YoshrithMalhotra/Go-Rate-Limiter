@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/ritik-kharya/gobouncer/internal/limiter"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/limiter"
 )
 
 // Integration tests — require a real Redis instance.

@@ -9,7 +9,7 @@ import (
 
 	"github.com/alicebob/miniredis/v2"
 	"github.com/redis/go-redis/v9"
-	"github.com/ritik-kharya/gobouncer/internal/limiter"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/limiter"
 )
 
 func setupSlidingWindow(t *testing.T) (*limiter.SlidingWindow, *miniredis.Miniredis) {

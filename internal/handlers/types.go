@@ -3,8 +3,8 @@ package handlers
 import (
 	"time"
 
-	"github.com/ritik-kharya/gobouncer/internal/limiter"
-	"github.com/ritik-kharya/gobouncer/internal/policy"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/limiter"
+	"github.com/YoshrithMalhotra/Go-Rate-Limiter/internal/policy"
 )
 
 // CheckRequest is what the caller sends.

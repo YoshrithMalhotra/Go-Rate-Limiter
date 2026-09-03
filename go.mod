@@ -1,4 +1,4 @@
-module github.com/ritik-kharya/gobouncer
+module github.com/YoshrithMalhotra/Go-Rate-Limiter
 
 go 1.26.3
 
