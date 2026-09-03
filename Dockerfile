@@ -16,7 +16,7 @@ RUN go mod download
 COPY . .
 
 # Build a statically linked Go binary
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o gobouncer ./cmd/api/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o governor ./cmd/api/main.go
 
 # Production stage
 FROM alpine:3.19
@@ -27,7 +27,7 @@ RUN adduser -D -u 10001 appuser
 WORKDIR /app
 
 # Copy the binary from the builder stage
-COPY --from=builder /app/gobouncer .
+COPY --from=builder /app/governor .
 
 # Copy default policy file to standard config location
 COPY --from=builder /app/config/policies.example.json ./config/policies.example.json
@@ -39,4 +39,4 @@ USER appuser
 EXPOSE 8080
 
 # Run the app
-ENTRYPOINT ["./gobouncer"]
+ENTRYPOINT ["./governor"]

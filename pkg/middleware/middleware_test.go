@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-// stubBouncer stands in for a running GoBouncer service.
-func stubBouncer(t *testing.T, status int, body any) *httptest.Server {
+// stubGovernor stands in for a running Governor service.
+func stubGovernor(t *testing.T, status int, body any) *httptest.Server {
 	t.Helper()
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/check" {
@@ -35,7 +35,7 @@ func okHandler() http.Handler {
 }
 
 func TestRateLimit_AllowedCallsNextHandler(t *testing.T) {
-	srv := stubBouncer(t, http.StatusOK, Result{Allowed: true, Remaining: 9})
+	srv := stubGovernor(t, http.StatusOK, Result{Allowed: true, Remaining: 9})
 	client := NewClient(srv.URL)
 
 	rr := httptest.NewRecorder()
@@ -54,7 +54,7 @@ func TestRateLimit_AllowedCallsNextHandler(t *testing.T) {
 }
 
 func TestRateLimit_DeniedBlocksNextHandler(t *testing.T) {
-	srv := stubBouncer(t, http.StatusTooManyRequests, Result{Allowed: false, Remaining: 0, RetryAfter: 2500})
+	srv := stubGovernor(t, http.StatusTooManyRequests, Result{Allowed: false, Remaining: 0, RetryAfter: 2500})
 	client := NewClient(srv.URL)
 
 	called := false
@@ -77,7 +77,7 @@ func TestRateLimit_DeniedBlocksNextHandler(t *testing.T) {
 
 // A denial the service reports with retry_after=0 must still block.
 func TestRateLimit_DeniedWithoutRetryAfterStillBlocks(t *testing.T) {
-	srv := stubBouncer(t, http.StatusTooManyRequests, Result{Allowed: false, Remaining: 0})
+	srv := stubGovernor(t, http.StatusTooManyRequests, Result{Allowed: false, Remaining: 0})
 	client := NewClient(srv.URL)
 
 	called := false
@@ -95,7 +95,7 @@ func TestRateLimit_DeniedWithoutRetryAfterStillBlocks(t *testing.T) {
 }
 
 func TestClient_ServiceDown_FailOpenAllows(t *testing.T) {
-	srv := stubBouncer(t, http.StatusOK, Result{Allowed: true})
+	srv := stubGovernor(t, http.StatusOK, Result{Allowed: true})
 	url := srv.URL
 	srv.Close() // service is now unreachable
 
@@ -110,7 +110,7 @@ func TestClient_ServiceDown_FailOpenAllows(t *testing.T) {
 }
 
 func TestClient_ServiceDown_FailClosedDenies(t *testing.T) {
-	srv := stubBouncer(t, http.StatusOK, Result{Allowed: true})
+	srv := stubGovernor(t, http.StatusOK, Result{Allowed: true})
 	url := srv.URL
 	srv.Close()
 

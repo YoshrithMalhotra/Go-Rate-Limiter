@@ -99,25 +99,25 @@ func (r *Registry) Render() string {
 	})
 
 	var b strings.Builder
-	b.WriteString("# HELP gobouncer_checks_total Total rate-limit checks by policy, algorithm, and outcome.\n")
-	b.WriteString("# TYPE gobouncer_checks_total counter\n")
+	b.WriteString("# HELP governor_checks_total Total rate-limit checks by policy, algorithm, and outcome.\n")
+	b.WriteString("# TYPE governor_checks_total counter\n")
 	for _, key := range keys {
-		fmt.Fprintf(&b, "gobouncer_checks_total%s %d\n", key.promLabels(), r.checks[key])
+		fmt.Fprintf(&b, "governor_checks_total%s %d\n", key.promLabels(), r.checks[key])
 	}
 
-	b.WriteString("# HELP gobouncer_check_duration_seconds Rate-limit check duration in seconds.\n")
-	b.WriteString("# TYPE gobouncer_check_duration_seconds histogram\n")
+	b.WriteString("# HELP governor_check_duration_seconds Rate-limit check duration in seconds.\n")
+	b.WriteString("# TYPE governor_check_duration_seconds histogram\n")
 	for _, key := range keys {
 		h := r.durations[key]
 		if h == nil {
 			continue
 		}
 		for i, bucket := range durationBuckets {
-			fmt.Fprintf(&b, "gobouncer_check_duration_seconds_bucket%s %d\n", key.promLabelsWith("le", fmt.Sprintf("%.3g", bucket)), h.Buckets[i])
+			fmt.Fprintf(&b, "governor_check_duration_seconds_bucket%s %d\n", key.promLabelsWith("le", fmt.Sprintf("%.3g", bucket)), h.Buckets[i])
 		}
-		fmt.Fprintf(&b, "gobouncer_check_duration_seconds_bucket%s %d\n", key.promLabelsWith("le", "+Inf"), h.Count)
-		fmt.Fprintf(&b, "gobouncer_check_duration_seconds_sum%s %.9f\n", key.promLabels(), h.Sum)
-		fmt.Fprintf(&b, "gobouncer_check_duration_seconds_count%s %d\n", key.promLabels(), h.Count)
+		fmt.Fprintf(&b, "governor_check_duration_seconds_bucket%s %d\n", key.promLabelsWith("le", "+Inf"), h.Count)
+		fmt.Fprintf(&b, "governor_check_duration_seconds_sum%s %.9f\n", key.promLabels(), h.Sum)
+		fmt.Fprintf(&b, "governor_check_duration_seconds_count%s %d\n", key.promLabels(), h.Count)
 	}
 
 	return b.String()

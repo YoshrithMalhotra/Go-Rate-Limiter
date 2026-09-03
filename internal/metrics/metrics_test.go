@@ -13,9 +13,9 @@ func TestRegistryRenderIncludesCountersAndHistogram(t *testing.T) {
 	output := registry.Render()
 
 	expected := []string{
-		`gobouncer_checks_total{policy="login",algorithm="gcra",outcome="allowed"} 1`,
-		`gobouncer_check_duration_seconds_bucket{policy="login",algorithm="gcra",outcome="allowed",le="0.005"} 1`,
-		`gobouncer_check_duration_seconds_count{policy="login",algorithm="gcra",outcome="allowed"} 1`,
+		`governor_checks_total{policy="login",algorithm="gcra",outcome="allowed"} 1`,
+		`governor_check_duration_seconds_bucket{policy="login",algorithm="gcra",outcome="allowed",le="0.005"} 1`,
+		`governor_check_duration_seconds_count{policy="login",algorithm="gcra",outcome="allowed"} 1`,
 	}
 	for _, line := range expected {
 		if !strings.Contains(output, line) {

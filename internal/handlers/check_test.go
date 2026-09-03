@@ -133,7 +133,7 @@ func TestCheckHandler_RecordsMetrics(t *testing.T) {
 	}
 
 	output := registry.Render()
-	expected := `gobouncer_checks_total{policy="login",algorithm="gcra",outcome="allowed"} 1`
+	expected := `governor_checks_total{policy="login",algorithm="gcra",outcome="allowed"} 1`
 	if !strings.Contains(output, expected) {
 		t.Fatalf("expected metrics output to contain %q, got:\n%s", expected, output)
 	}

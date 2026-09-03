@@ -14,7 +14,7 @@ import (
 // Option is the functional options type
 type Option func(*Client)
 
-// WithTimeout sets the max time to wait for GoBouncer to respond.
+// WithTimeout sets the max time to wait for Governor to respond.
 // Default: 150ms. Keep this tight — a slow rate limiter is worse than none.
 func WithTimeout(d time.Duration) Option {
 	return func(c *Client) {
@@ -22,7 +22,7 @@ func WithTimeout(d time.Duration) Option {
 	}
 }
 
-// WithFailOpen controls what happens if GoBouncer is unreachable.
+// WithFailOpen controls what happens if Governor is unreachable.
 // true  = allow the request through (default — availability over security)
 // false = deny the request (security over availability)
 func WithFailOpen(open bool) Option {
@@ -31,8 +31,8 @@ func WithFailOpen(open bool) Option {
 	}
 }
 
-// NewClient creates a GoBouncer HTTP client.
-// baseURL is the address of your running GoBouncer service e.g. "http://localhost:8080"
+// NewClient creates a Governor HTTP client.
+// baseURL is the address of your running Governor service e.g. "http://localhost:8080"
 func NewClient(baseURL string, opts ...Option) *Client {
 	c := &Client{
 		baseURL:  baseURL,
@@ -58,9 +58,9 @@ func NewClient(baseURL string, opts ...Option) *Client {
 	return c
 }
 
-// Check asks GoBouncer: should this key be allowed right now?
+// Check asks Governor: should this key be allowed right now?
 // ctx carries the deadline from the incoming request — if the user
-// cancelled their request, we cancel the GoBouncer call too.
+// cancelled their request, we cancel the Governor call too.
 func (c *Client) Check(ctx context.Context, key string, limit, windowMs int64) (Result, error) {
 	result, err := c.doCheck(ctx, checkRequest{
 		Key:      key,
@@ -83,18 +83,18 @@ func (c *Client) CheckPolicy(ctx context.Context, key, policy string) (Result, e
 func (c *Client) CheckMany(ctx context.Context, checks []Check) (MultiResult, error) {
 	body, err := json.Marshal(checkRequest{Checks: checks})
 	if err != nil {
-		return c.onMultiError(fmt.Errorf("gobouncer: marshal error: %w", err))
+		return c.onMultiError(fmt.Errorf("governor: marshal error: %w", err))
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/check", bytes.NewReader(body))
 	if err != nil {
-		return c.onMultiError(fmt.Errorf("gobouncer: build request error: %w", err))
+		return c.onMultiError(fmt.Errorf("governor: build request error: %w", err))
 	}
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return c.onMultiError(fmt.Errorf("gobouncer: request failed: %w", err))
+		return c.onMultiError(fmt.Errorf("governor: request failed: %w", err))
 	}
 	defer func() { _ = resp.Body.Close() }()
 
@@ -104,7 +104,7 @@ func (c *Client) CheckMany(ctx context.Context, checks []Check) (MultiResult, er
 
 	var result MultiResult
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return c.onMultiError(fmt.Errorf("gobouncer: decode error: %w", err))
+		return c.onMultiError(fmt.Errorf("governor: decode error: %w", err))
 	}
 	return result, nil
 }
@@ -113,7 +113,7 @@ func (c *Client) doCheck(ctx context.Context, check checkRequest) (Result, error
 	// build the request body
 	body, err := json.Marshal(check)
 	if err != nil {
-		return c.onError(fmt.Errorf("gobouncer: marshal error: %w", err))
+		return c.onError(fmt.Errorf("governor: marshal error: %w", err))
 	}
 
 	// build the HTTP request — attach ctx so cancellation propagates
@@ -124,14 +124,14 @@ func (c *Client) doCheck(ctx context.Context, check checkRequest) (Result, error
 		bytes.NewReader(body),
 	)
 	if err != nil {
-		return c.onError(fmt.Errorf("gobouncer: build request error: %w", err))
+		return c.onError(fmt.Errorf("governor: build request error: %w", err))
 	}
 	req.Header.Set("Content-Type", "application/json")
 
 	// fire the request
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return c.onError(fmt.Errorf("gobouncer: request failed: %w", err))
+		return c.onError(fmt.Errorf("governor: request failed: %w", err))
 	}
 
 	// run this function at last -- since using defer function
@@ -148,7 +148,7 @@ func (c *Client) doCheck(ctx context.Context, check checkRequest) (Result, error
 	// parse the response
 	var result Result
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return c.onError(fmt.Errorf("gobouncer: decode error: %w", err))
+		return c.onError(fmt.Errorf("governor: decode error: %w", err))
 	}
 	if limit := resp.Header.Get("X-RateLimit-Limit"); limit != "" {
 		if parsed, err := strconv.ParseInt(limit, 10, 64); err == nil {
@@ -169,15 +169,15 @@ func checkStatus(code int) error {
 	if code == http.StatusOK || code == http.StatusTooManyRequests {
 		return nil
 	}
-	return fmt.Errorf("gobouncer: unexpected status %d", code)
+	return fmt.Errorf("governor: unexpected status %d", code)
 }
 
-// onError is called whenever the GoBouncer service is unreachable or broken.
+// onError is called whenever the Governor service is unreachable or broken.
 // failOpen = true  → allow the request, return no error to the middleware
 // failOpen = false → deny the request, caller gets the error
 func (c *Client) onError(err error) (Result, error) {
 	if c.failOpen {
-		// GoBouncer is down — let traffic through, log the error upstream
+		// Governor is down — let traffic through, log the error upstream
 		return Result{Allowed: true, Remaining: -1}, nil
 	}
 	return Result{Allowed: false}, err

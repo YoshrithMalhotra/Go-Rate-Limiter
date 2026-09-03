@@ -1,7 +1,7 @@
 .PHONY: check build run test test-integration lint clean fmt vet docker-build docker-up docker-down docker-logs
 
 # Binary name
-BINARY=gobouncer
+BINARY=governor
 
 ## check: Run all quality checks
 check: fmt vet test build

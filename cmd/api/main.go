@@ -102,11 +102,11 @@ func setupRoutes(rdb *redis.Client, algos handlers.Algorithms, policyStore *poli
 		_, _ = fmt.Fprint(w, `<!DOCTYPE html>
 <html>
 <head>
-	<title>GoBouncer</title>
+	<title>Governor</title>
 </head>
 <body>
-	<h1>Welcome to GoBouncer!</h1>
-	<p>This is the GoBouncer rate-limiting service.</p>
+	<h1>Welcome to Governor!</h1>
+	<p>This is the Governor rate-limiting service.</p>
 </body>
 </html>`)
 	})

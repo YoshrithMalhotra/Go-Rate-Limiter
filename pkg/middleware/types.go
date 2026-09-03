@@ -46,7 +46,7 @@ type checkRequest struct {
 	Checks   []Check `json:"checks,omitempty"`
 }
 
-// Client is the GoBouncer HTTP client.
+// Client is the Governor HTTP client.
 // Create once at startup, reuse everywhere.
 // It is safe for concurrent use.
 type Client struct {

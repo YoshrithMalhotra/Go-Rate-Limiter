@@ -4,8 +4,8 @@
 .github/
 
 # Build output and binaries
-gobouncer
-gobouncer.exe
+governor
+governor.exe
 /bin/
 /dist/
 *.exe

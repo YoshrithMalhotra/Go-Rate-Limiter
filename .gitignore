@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-gobouncer
+governor
 
 # Test binaries
 *.test

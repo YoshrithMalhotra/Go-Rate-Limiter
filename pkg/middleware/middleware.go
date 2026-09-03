@@ -34,7 +34,7 @@ func WithWindow(d time.Duration) MiddlewareOption {
 	}
 }
 
-// WithPolicy uses a named GoBouncer policy instead of inline limit/window values.
+// WithPolicy uses a named Governor policy instead of inline limit/window values.
 func WithPolicy(name string) MiddlewareOption {
 	return func(c *config) {
 		c.policy = name

@@ -1,6 +1,6 @@
 version: 2
 
-project_name: gobouncer
+project_name: governor
 
 before:
   hooks:
@@ -8,7 +8,7 @@ before:
 
 builds:
   - main: ./cmd/api
-    binary: gobouncer
+    binary: governor
     env:
       - CGO_ENABLED=0
     flags:
